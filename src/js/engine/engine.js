@@ -15,8 +15,19 @@ function initEngine () {
     engine = new BABYLON.Engine(canvas, true)
     scene = new BABYLON.Scene(engine)
 
+    // Scene properties
     scene.clearColor = new BABYLON.Color3(0.41, 0.51, 0.55)
-    scene.enablePhysics()
+
+
+    // Set physics engine
+    let gravityVector = new BABYLON.Vector3(0, -9.81, -10)
+    let physicsPlugin = new BABYLON.CannonJSPlugin()
+    //let physicsPlugin = new BABYLON.OimoJSPlugin()
+
+    scene.enablePhysics(gravityVector, physicsPlugin)
+
+
+
 
     // Handle resize event (try without it)
     window.addEventListener("resize", () => engine.resize())
