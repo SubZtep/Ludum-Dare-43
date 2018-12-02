@@ -85,6 +85,11 @@ export default class extends InputManager {
       origin.y -= 0.5 // check the ground exactly
 
       let ray = new BABYLON.Ray(origin, pos, 1.5)
+
+      //FIXME: sometimes check fails, maybe player pos, or just wrong material...
+      // debug
+      //if (origin.z === 0) console.log('ray', [origin.toString(), pos.toString(), this._player.position.toString()])
+
       //if (typeof this._rayHelper !== "undefined") this._rayHelper.dispose()
       this._rayHelper = BABYLON.RayHelper.CreateAndShow(ray, scene, new BABYLON.Color3(1, 1, 0.1))
       this._rayHelper._renderLine.isPickable = false
@@ -192,10 +197,9 @@ export default class extends InputManager {
       this._moveSpeed,
       () => {
         this._player.rotation = new BABYLON.Vector3(0, 0, 0)
-        this._player.position = this._player.position.add(
-          this._directionToVector3(dir))
+        this._player.position = this._player.position.add(this._directionToVector3(dir))
 
-        this.move()
+        if (this.isMoveKeyPressed()) this.move()
       })
   }
 

@@ -15,14 +15,19 @@ export class InputManager {
       left: false,
       right: false,
       special: false,
+
+      // The current direction
       lastDir: null,
+
+      // In case of multiple key pressed store the order of key presses
       dirHistory: []
     }
   }
 
   initKeyboard () {
     document.addEventListener("keydown", e => {
-      //console.log('KEY Down')
+      //e.preventDefault()
+      //console.log('KEY Down', e.key)
       this._setState(e, true)
       this.move()
     })
@@ -38,58 +43,85 @@ export class InputManager {
   }
 
   _setState (e, setOn = true) {
+    let dir = null
     switch (e.key) {
       case "W":
       case "w":
+      case "ArrowUp":
         this._state.forward = setOn
-        if (setOn) this._state.lastDir = Directions.Up
+        dir = Directions.Up
         break
       case "S":
       case "s":
+      case "ArrowDown":
         this._state.backward = setOn
-        if (setOn) this._state.lastDir = Directions.Down
+        dir = Directions.Down
         break
       case "A":
       case "a":
+      case "ArrowLeft":
         this._state.left = setOn
-        if (setOn) this._state.lastDir = Directions.Left
+        dir = Directions.Left
         break
       case "D":
       case "d":
+      case "ArrowRight":
         this._state.right = setOn
-        if (setOn) this._state.lastDir = Directions.Right
+        dir = Directions.Right
         break
     }
     this._state.special = e.shiftKey
 
-    if (setOn) {
-      if (this._state.dirHistory.length === 0 ||
-          this._state.dirHistory[this._state.dirHistory.length-1] !== this._state.lastDir) {
-        this._state.dirHistory.push(this._state.lastDir)
-      }
-    } else {
 
+    if (setOn) {
+      // Key pressed
+
+      if (dir !== null) {
+        // Move direction key pressed
+
+        // Add previous (but still active) key to the history
+        if (
+          this._state.lastDir !== null &&
+          (
+            this._state.dirHistory.length === 0 ||
+            this._state.dirHistory[this._state.dirHistory.length-1] !== this._state.lastDir
+          )
+        ) {
+          this._state.dirHistory.push(this._state.lastDir)
+        }
+
+        // Set the new direction
+        this._state.lastDir = dir
+      }
+
+    } else {
+      // Key released
+
+      // If no movement key pressed just reset everything
       if (!this.isMoveKeyPressed()) {
         this._state.lastDir = null
         this._state.dirHistory = []
         return
       }
 
+      // Remove relesed key from the history
+      this._state.dirHistory = this._state.dirHistory.filter(hdir => dir !== hdir)
+
+      // Load back last correct direction if direction changed
       if (
-        this._state.dirHistory.length > 0 && (
+        this._state.dirHistory.length > 0 &&
+        (
           (this._state.lastDir === Directions.Up && !this._state.forward) ||
           (this._state.lastDir === Directions.Down && !this._state.backward) ||
           (this._state.lastDir === Directions.Left && !this._state.left) ||
           (this._state.lastDir === Directions.Right && !this._state.right)
         )
       ) {
-        //FIXME: usually buggy the history roll back
-        //console.log(this._state.dirHistory)
-        this._state.dirHistory.pop() // the released key
         this._state.lastDir = this._state.dirHistory.pop()
-        //console.log(this._state.dirHistory)
       }
     }
+
+    //console.log([this._state.lastDir, this._state.dirHistory.join(',')])
   }
 
   _initGUI () {
@@ -100,7 +132,7 @@ export class InputManager {
       if (typeof this._state[item] === 'object') {
         if (this._state[item] === null) {
         } else {
-          this._gui.add(this._state, item, this._state[item])
+          //this._gui.add(this._state, item, this._state[item])
         }
       } else {
         this._gui.add(this._state, item)
