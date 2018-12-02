@@ -5,8 +5,11 @@ export default class {
   }
 
   add (obj) {
+    obj.collisionsEnabled = false
     obj.physicsImpostor.sleep()
     obj.setEnabled(false)
+    //FIXME: fall dawn is calculating!!!
+
     this.pool.push(obj)
   }
 
@@ -17,6 +20,13 @@ export default class {
     obj.setEnabled(true)
     obj.physicsImpostor.wakeUp()
     return obj
+  }
+
+  wipe () {
+    let obj
+    while (obj = this.pool.pop()) {
+      obj.dispose()
+    }
   }
 
   empty () {

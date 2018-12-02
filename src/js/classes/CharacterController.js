@@ -15,7 +15,6 @@ export default class extends InputManager {
 
     this.cx = 0
     this._player = playerObj
-    //this._scene = scene
 
     // Setting
     this._moveSpeed = 5 // Move animation speed
@@ -29,7 +28,7 @@ export default class extends InputManager {
     this._helper.isPickable = false
 
     this._initAnimations()
-    this._initKeyboard()
+    this.initKeyboard()
 
     this._initGUI()
   }
@@ -92,6 +91,7 @@ export default class extends InputManager {
 
       let hit = scene.pickWithRay(ray)
       if (hit.hit) {
+        //TODO: some ux feedback for failed move attempt
         return false
       }
     }
@@ -99,16 +99,36 @@ export default class extends InputManager {
     return true;
   }
 
-  /** move the player */
-  move (dir, special = false) {
-    if (this._isMoving()) return
+  /** move the player based on state */
+  move () {
+    this._updateGUI()
+
+    if (this.isMoving()) {
+      //console.log('sorry, im already moving')
+      return
+    }
+
+    let dir = this._state.lastDir
+    /* if (this._state.forward) {
+      dir = Directions.Up
+    } else if (this._state.backward) {
+      dir = Directions.Down
+    } else if (this._state.left) {
+      dir = Directions.Left
+    } else if (this._state.right) {
+      dir = Directions.Right
+    } */
+
+
     if (!this._canMove(dir)) return
 
-    if (special) {
+    if (this._state.special) {
       this._slide(dir)
     } else {
       this._roll(dir)
     }
+
+    this._updateGUI()
   }
 
   /** move the player with slide animation */
@@ -151,6 +171,8 @@ export default class extends InputManager {
         rot = new BABYLON.Vector3(0, 0, -Math.PI / 2)
         piv = new BABYLON.Vector3(0.5, -0.5, 0)
         break
+      default:
+        return
     }
 
     this._player.setPivotPoint(piv)
@@ -172,13 +194,13 @@ export default class extends InputManager {
         this._player.rotation = new BABYLON.Vector3(0, 0, 0)
         this._player.position = this._player.position.add(
           this._directionToVector3(dir))
-      })
 
-    this._updateGUI()
+        this.move()
+      })
   }
 
   /** Tells is the player is moving */
-  _isMoving () {
+  isMoving () {
     return this._isAnimRunning('slide') || this._isAnimRunning('roll')
   }
 

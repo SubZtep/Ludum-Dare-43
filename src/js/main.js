@@ -14,17 +14,19 @@ function startGame () {
   createLight()
   createEnvironment()
   createPlayer()
-
+  initPool()
   if (!PRODUCTION) {
     initDebug()
   }
 
-
   let cc = new CharacterController(player, scene)
 
-  initPool()
-
-  //throwSpheres()
+  setTimeout(() => {
+    throwSpheres()
+    setInterval(() => {
+      throwSpheres()
+    }, 5000)
+  }, 2000)
 
 
   // Game loop

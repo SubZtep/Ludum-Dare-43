@@ -20,8 +20,8 @@ export function createPlayer () {
     },
     scene)
   player.material = playerMaterial
-  player.isPickable = false // no hit myself with ray(cast)
   player.position.y = 0.5
+  player.isPickable = false // no hit myself with ray(cast)
 
   shadowGenerator.getShadowMap().renderList.push(player)
 

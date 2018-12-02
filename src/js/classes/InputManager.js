@@ -8,43 +8,110 @@ export /* Enums */ const Directions = {
 }
 export class InputManager {
 
-  _initKeyboard () {
-    document.addEventListener("keypress", e => {
-      let dir
-      //console.log(e)
-      switch (e.key) {
-        case "W":
-        case "w":
-          dir = Directions.Up
-          break
-        case "S":
-        case "s":
-          dir = Directions.Down
-          break
-        case "A":
-        case "a":
-          dir = Directions.Left
-          break
-        case "D":
-        case "d":
-          dir = Directions.Right
-          break
-        default:
-          return
-      }
+  constructor () {
+    this._state = {
+      forward: false,
+      backward: false,
+      left: false,
+      right: false,
+      special: false,
+      lastDir: null,
+      dirHistory: []
+    }
+  }
 
-      this.move(dir, e.shiftKey)
+  initKeyboard () {
+    document.addEventListener("keydown", e => {
+      //console.log('KEY Down')
+      this._setState(e, true)
+      this.move()
+    })
+    document.addEventListener("keyup", e => {
+      //console.log('KEY Up')
+      this._setState(e, false)
+      this.move()
     })
   }
 
+  isMoveKeyPressed () {
+    return this._state.forward || this._state.backward || this._state.left || this._state.right
+  }
+
+  _setState (e, setOn = true) {
+    switch (e.key) {
+      case "W":
+      case "w":
+        this._state.forward = setOn
+        if (setOn) this._state.lastDir = Directions.Up
+        break
+      case "S":
+      case "s":
+        this._state.backward = setOn
+        if (setOn) this._state.lastDir = Directions.Down
+        break
+      case "A":
+      case "a":
+        this._state.left = setOn
+        if (setOn) this._state.lastDir = Directions.Left
+        break
+      case "D":
+      case "d":
+        this._state.right = setOn
+        if (setOn) this._state.lastDir = Directions.Right
+        break
+    }
+    this._state.special = e.shiftKey
+
+    if (setOn) {
+      if (this._state.dirHistory.length === 0 ||
+          this._state.dirHistory[this._state.dirHistory.length-1] !== this._state.lastDir) {
+        this._state.dirHistory.push(this._state.lastDir)
+      }
+    } else {
+
+      if (!this.isMoveKeyPressed()) {
+        this._state.lastDir = null
+        this._state.dirHistory = []
+        return
+      }
+
+      if (
+        this._state.dirHistory.length > 0 && (
+          (this._state.lastDir === Directions.Up && !this._state.forward) ||
+          (this._state.lastDir === Directions.Down && !this._state.backward) ||
+          (this._state.lastDir === Directions.Left && !this._state.left) ||
+          (this._state.lastDir === Directions.Right && !this._state.right)
+        )
+      ) {
+        //FIXME: usually buggy the history roll back
+        //console.log(this._state.dirHistory)
+        this._state.dirHistory.pop() // the released key
+        this._state.lastDir = this._state.dirHistory.pop()
+        //console.log(this._state.dirHistory)
+      }
+    }
+  }
 
   _initGUI () {
+    this._gui = new dat.GUI()
+
+    this._gui.addFolder('Player state')
+    for (let item of Object.keys(this._state)) {
+      if (typeof this._state[item] === 'object') {
+        if (this._state[item] === null) {
+        } else {
+          this._gui.add(this._state, item, this._state[item])
+        }
+      } else {
+        this._gui.add(this._state, item)
+      }
+    }
+
     let FizzyText = function (obj) {
       this.x = obj.x
       this.y = obj.y
       this.z = obj.z
     }
-    this._gui = new dat.GUI()
 
     this._gui.addFolder('Player Position')
     this._ftPlayerPos = new FizzyText(this._player.position)
@@ -100,6 +167,7 @@ export class InputManager {
 
   _updateGUI () {
     if (typeof this._gui === 'undefined') return
+
 
     this._ftPlayerPos.x = this._player.position.x
     this._ftPlayerPos.y = this._player.position.y
