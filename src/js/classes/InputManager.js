@@ -33,11 +33,7 @@ export class InputManager {
           return
       }
 
-      if (e.shiftKey) {
-        this._slide(dir)
-      } else {
-        this._roll(dir)
-      }
+      this.move(dir, e.shiftKey)
     })
   }
 

@@ -26,6 +26,7 @@ export default class extends InputManager {
     this._helper.material.diffuseColor = new BABYLON.Color3(0, 0.5, 0.5)
     this._helper.parent = this._player
     this._helper.position = this._player.getPivotPoint()
+    this._helper.isPickable = false
 
     this._initAnimations()
     this._initKeyboard()
@@ -57,27 +58,62 @@ export default class extends InputManager {
     this._anims.roll.run = null
   }
 
-  _slide (dir) {
-    if (this._isMoving()) return
-
-    let slide
+  _directionToVector3 (dir) {
     switch (dir) {
       case Directions.Up:
-        slide = new BABYLON.Vector3(0, 0, 1)
-        break
+        return BABYLON.Vector3.Forward()
       case Directions.Down:
-        slide = new BABYLON.Vector3(0, 0, -1)
-        break
+        return BABYLON.Vector3.Backward()
       case Directions.Left:
-        slide = new BABYLON.Vector3(-1, 0, 0)
-        break
+        return BABYLON.Vector3.Left()
       case Directions.Right:
-        slide = new BABYLON.Vector3(1, 0, 0)
-        break
-      default:
-        return
+        return BABYLON.Vector3.Right()
+    }
+    return BABYLON.Vector3.Zero()
+  }
+
+  /** Test if the player can move to the specified direction */
+  _canMove (dir) {
+    let pos = this._directionToVector3(dir)
+
+    for (let testX of [-0.5, 0, 0.5]) {
+      let origin = this._player.position.clone()
+      if (dir === Directions.Up || dir === Directions.Down) {
+        origin.x += testX
+      } else {
+        origin.z += testX
+      }
+      origin.y -= 0.5 // check the ground exactly
+
+      let ray = new BABYLON.Ray(origin, pos, 1.5)
+      //if (typeof this._rayHelper !== "undefined") this._rayHelper.dispose()
+      this._rayHelper = BABYLON.RayHelper.CreateAndShow(ray, scene, new BABYLON.Color3(1, 1, 0.1))
+      this._rayHelper._renderLine.isPickable = false
+
+      let hit = scene.pickWithRay(ray)
+      if (hit.hit) {
+        return false
+      }
     }
 
+    return true;
+  }
+
+  /** move the player */
+  move (dir, special = false) {
+    if (this._isMoving()) return
+    if (!this._canMove(dir)) return
+
+    if (special) {
+      this._slide(dir)
+    } else {
+      this._roll(dir)
+    }
+  }
+
+  /** move the player with slide animation */
+  _slide (dir) {
+    let slide = this._directionToVector3(dir)
     let newPos = this._player.position.add(slide)
     let keys = [
       { frame: 0, value: this._player.position },
@@ -91,45 +127,31 @@ export default class extends InputManager {
       0,
       60,
       false,
-      this._moveSpeed,
-      /* () => {
-        // Reset rotation for easy pivot calulation
-        this._player.rotation = new BABYLON.Vector3(0, 0, 0)
-        //console.log([this._player.position, this._player.getAbsolutePosition()])
-      } */)
-
+      this._moveSpeed)
   }
 
+  /** move the player with roll animation */
   _roll (dir) {
-    if (this._isMoving()) return
-
-    let rot, piv, pos
+    let rot, piv
 
     switch (dir) {
       case Directions.Up:
         rot = new BABYLON.Vector3(Math.PI / 2, 0, 0)
         piv = new BABYLON.Vector3(0, -0.5, 0.5)
-        pos = new BABYLON.Vector3(0, 0, 1)
         break
       case Directions.Down:
         rot = new BABYLON.Vector3(-Math.PI / 2, 0, 0)
         piv = new BABYLON.Vector3(0, -0.5, -0.5)
-        pos = new BABYLON.Vector3(0, 0, -1)
         break
       case Directions.Left:
         rot = new BABYLON.Vector3(0, 0, Math.PI / 2)
         piv = new BABYLON.Vector3(-0.5, -0.5, 0)
-        pos = new BABYLON.Vector3(-1, 0, 0)
         break
       case Directions.Right:
         rot = new BABYLON.Vector3(0, 0, -Math.PI / 2)
         piv = new BABYLON.Vector3(0.5, -0.5, 0)
-        pos = new BABYLON.Vector3(1, 0, 0)
         break
-      default:
-        return
     }
-
 
     this._player.setPivotPoint(piv)
 
@@ -148,13 +170,14 @@ export default class extends InputManager {
       this._moveSpeed,
       () => {
         this._player.rotation = new BABYLON.Vector3(0, 0, 0)
-        this._player.position = this._player.position.add(pos)
+        this._player.position = this._player.position.add(
+          this._directionToVector3(dir))
       })
-
 
     this._updateGUI()
   }
 
+  /** Tells is the player is moving */
   _isMoving () {
     return this._isAnimRunning('slide') || this._isAnimRunning('roll')
   }
@@ -163,5 +186,4 @@ export default class extends InputManager {
     return this._anims[name].run !== null &&
       this._anims[name].run.animationStarted
   }
-
 }
