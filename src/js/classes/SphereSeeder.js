@@ -20,9 +20,9 @@ export function initPool () {
 
     //console.log('_spheres', _spheres)
     //console.log('_pool', _pool.pool)
-    console.log('_spheres, _pool', [_spheres.length, _pool.pool.length])
+    //console.log('_spheres, _pool', [_spheres.length, _pool.pool.length])
 
-    if (_spheres.length === 0) throwSpheres()
+    //if (_spheres.length === 0) throwSpheres()
 
   })
 }

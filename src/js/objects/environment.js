@@ -7,13 +7,18 @@ export function createEnvironment () {
   createObtacles()
 }
 
-
 function createGround () {
-  let groundMaterial = new BABYLON.StandardMaterial('groundmat', scene);
+  let groundMaterial = new BABYLON.StandardMaterial('groundmat', scene)
   groundMaterial.diffuseColor = new BABYLON.Color3(0.82, 0.89, 0.95)
   //groundMaterial.diffuseColor = BABYLON.Color3.Green()
   //groundMaterial.emissiveColor = new BABYLON.Color3(0.1, 0.1, 0.1)
   //groundMaterial.alpha = 0.5
+
+  /* let groundTexture = new BABYLON.Texture("../assets/wood.png", scene)
+  groundTexture.uScale = 5
+  groundTexture.vScale = 5
+  groundMaterial.diffuseTexture = groundTexture
+  groundMaterial.bumpTexture = new BABYLON.Texture("../assets/wood-normal-map.png", scene) */
 
   ground = BABYLON.MeshBuilder.CreateGround("ground", { width: 6, height: 12 }, scene)
   ground.material = groundMaterial
@@ -21,7 +26,6 @@ function createGround () {
   ground.position = new BABYLON.Vector3(0, 0, 4)
 
   ground.receiveShadows = true
-
 
   ground.physicsImpostor = new BABYLON.PhysicsImpostor(
     ground,
@@ -51,5 +55,4 @@ function createObtacles () {
   box2.rotation.y = -Math.PI / 5
   box2.position = new BABYLON.Vector3(1.5, 0, 6)
   box2.physicsImpostor = new BABYLON.PhysicsImpostor(box2, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.9 }, scene)
-
 }

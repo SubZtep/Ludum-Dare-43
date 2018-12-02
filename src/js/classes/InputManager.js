@@ -50,7 +50,6 @@ export class InputManager {
     }
     this._gui = new dat.GUI()
 
-
     this._gui.addFolder('Player Position')
     this._ftPlayerPos = new FizzyText(this._player.position)
 

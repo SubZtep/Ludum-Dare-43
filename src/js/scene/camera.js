@@ -3,7 +3,24 @@ import { canvas, scene } from "Engine/engine"
 export let camera = null
 
 export function createCamera () {
+  createArcCamera()
+  //createFollowCamera()
+}
 
+function createFollowCamera () {
+  camera = new BABYLON.FollowCamera(
+    "Camera",
+    new BABYLON.Vector3(0, 10, -10),
+    scene)
+
+  camera.radius = 10
+  camera.heightOffset = 10
+  camera.rotationOffset = 180
+  camera.cameraAcceleration = 0.001
+  camera.maxCameraSpeed = 10
+}
+
+function createArcCamera () {
   camera = new BABYLON.ArcRotateCamera(
     "Camera",
     -Math.PI / 2,
@@ -11,21 +28,5 @@ export function createCamera () {
     15,
     new BABYLON.Vector3(0, 0, 3),
     scene)
-
-  /*
-    "Camera",
-    3 * Math.PI / 4,
-    Math.PI / 4,
-    4,
-    BABYLON.Vector3.Zero(),
-  */
-
-  //camera.setPosition(new BABYLON.Vector3(0, 0, 0))
-
-
-
   camera.attachControl(canvas, true)
-
-  //camera.inputs.attachInput(camera.inputs.attached.mouse)
-  //camera.setTarget(new BABYLON.Vector3(0, 0, 10))
 }

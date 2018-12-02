@@ -1,5 +1,6 @@
 import { scene } from "Engine/engine"
 import { Directions, InputManager } from './InputManager'
+import { camera } from "Scene/camera"
 
 const Animations = {
   Slide: 'slideAnim',
@@ -17,7 +18,7 @@ export default class extends InputManager {
     //this._scene = scene
 
     // Setting
-    this._moveSpeed = 2 // Move animation speed
+    this._moveSpeed = 5 // Move animation speed
 
     // Little helper
     this._helper = BABYLON.MeshBuilder.CreateSphere("helper", { diameter: .5 }, scene)

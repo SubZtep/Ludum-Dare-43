@@ -18,8 +18,7 @@ function startGame () {
 
   initPool()
 
-
-  throwSpheres()
+  //throwSpheres()
 
 
   // Game loop

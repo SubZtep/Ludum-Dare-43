@@ -1,5 +1,6 @@
 import { scene } from "Engine/engine"
 import { shadowGenerator } from "Scene/light"
+import { camera } from "Scene/camera"
 
 export let player = null
 
@@ -25,4 +26,6 @@ export function createPlayer () {
   shadowGenerator.getShadowMap().renderList.push(player)
 
   //console.log(shadowGenerator.getShadowMap().renderList)
+
+  camera.lockedTarget = player
 }
