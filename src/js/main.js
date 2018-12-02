@@ -6,6 +6,7 @@ import { createEnvironment } from "Objects/environment"
 import { createPlayer, player } from "Objects/player"
 import CharacterController from "Classes/CharacterController"
 import { getSphere, initPool, throwSpheres } from "Classes/SphereSeeder"
+import { initDebug } from "Engine/debug"
 
 function startGame () {
   // Create basic objects
@@ -13,6 +14,11 @@ function startGame () {
   createLight()
   createEnvironment()
   createPlayer()
+
+  if (!PRODUCTION) {
+    initDebug()
+  }
+
 
   let cc = new CharacterController(player, scene)
 

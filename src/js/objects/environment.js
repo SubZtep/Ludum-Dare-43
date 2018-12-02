@@ -1,5 +1,5 @@
 import { scene } from "Engine/engine"
-import 'babylonjs-inspector'
+import { gizmoMeshes } from "Engine/debug"
 
 export let ground = null
 
@@ -33,46 +33,34 @@ function createGround () {
     BABYLON.PhysicsImpostor.BoxImpostor,
     { mass: 0, restitution: 0.9 },
     scene)
+
+  gizmoMeshes.push(ground)
 }
 
 function createObtacles () {
 
   let box1 = BABYLON.MeshBuilder.CreateBox("box1", { height: 1, width: 2, depth: 0.5 }, scene)
-  box1.rotation.y = Math.PI / 5
-  box1.position = new BABYLON.Vector3(-1, 0, 5)
+  //box1.rotation.y = Math.PI / 5
+  box1.rotationQuaternion = new BABYLON.Quaternion(0, 0.64, 0, 0.77)
+  box1.position = new BABYLON.Vector3(-2.80, 0, 6.49)
+  box1.scaling = new BABYLON.Vector3(2.82, 1, 1.20)
   box1.physicsImpostor = new BABYLON.PhysicsImpostor(box1, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.9 }, scene)
+  gizmoMeshes.push(box1)
 
   let box2 = BABYLON.MeshBuilder.CreateBox("box2", { height: 1, width: 2, depth: 0.5 }, scene)
-  box2.rotation.y = -Math.PI / 5
-  box2.position = new BABYLON.Vector3(1.5, 0, 6)
+  box2.rotationQuaternion = new BABYLON.Quaternion(0, -0.65, 0, 0.76)
+  box2.position = new BABYLON.Vector3(0.84, 0, 6.91)
+  box2.scaling = new BABYLON.Vector3(2.93, 1, 1.20)
   box2.physicsImpostor = new BABYLON.PhysicsImpostor(box2, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.9 }, scene)
+  gizmoMeshes.push(box2)
 
-  if (!PRODUCTION) {
-    createGizmoManager([box1, box2])
-  }
+  let box3 = BABYLON.MeshBuilder.CreateBox("box3", { height: 1, width: 2, depth: 0.5 }, scene)
+  box3.rotationQuaternion = new BABYLON.Quaternion(0, -0.69, 0, 0.73)
+  box3.position = new BABYLON.Vector3(2.92, 0, 6.34)
+  box3.scaling = new BABYLON.Vector3(0.68, 0.5, 0.53)
+  box3.physicsImpostor = new BABYLON.PhysicsImpostor(box3, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.9 }, scene)
+  gizmoMeshes.push(box3)
 }
 
 
-function createGizmoManager (meshes) {
 
-  scene.debugLayer.show()
-
-  let gizmoManager = new BABYLON.GizmoManager(scene)
-  gizmoManager.boundingBoxGizmoEnabled = true
-  gizmoManager.attachableMeshes = meshes
-
-  document.onkeydown =  e => {
-    if (e.key == 'w') {
-        gizmoManager.positionGizmoEnabled = !gizmoManager.positionGizmoEnabled
-    }
-    if (e.key == 'e') {
-        gizmoManager.rotationGizmoEnabled = !gizmoManager.rotationGizmoEnabled
-    }
-    if (e.key == 'r') {
-        gizmoManager.scaleGizmoEnabled = !gizmoManager.scaleGizmoEnabled
-    }
-    if (e.key == 'q') {
-        gizmoManager.boundingBoxGizmoEnabled = !gizmoManager.boundingBoxGizmoEnabled
-    }
-  }
-}
