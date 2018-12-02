@@ -342,41 +342,42 @@ babylon@^6.18.0:
   version "6.18.0"
   resolved "https://registry.yarnpkg.com/babylon/-/babylon-6.18.0.tgz#af2f3b88fa6f5c1e4c634d1a0f8eac4f55b395e3"
 
-babylonjs-gltf2interface@3.3.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/babylonjs-gltf2interface/-/babylonjs-gltf2interface-3.3.0.tgz#0f83f9473d37f14c60562d234c972067f28b0076"
+babylonjs-gltf2interface@4.0.0-alpha.10:
+  version "4.0.0-alpha.10"
+  resolved "https://registry.yarnpkg.com/babylonjs-gltf2interface/-/babylonjs-gltf2interface-4.0.0-alpha.10.tgz#803d046c380129bdf7f314ee281538e6c405e20d"
 
-babylonjs-gui@3.3.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/babylonjs-gui/-/babylonjs-gui-3.3.0.tgz#373328616cbe467cc9b0b99a3b3cd1318f90c921"
+babylonjs-gui@4.0.0-alpha.10:
+  version "4.0.0-alpha.10"
+  resolved "https://registry.yarnpkg.com/babylonjs-gui/-/babylonjs-gui-4.0.0-alpha.10.tgz#afdd47cb0a518f85f51d39da6f7240c3ff51910c"
   dependencies:
-    babylonjs "3.3.0"
+    babylonjs "4.0.0-alpha.10"
 
-babylonjs-inspector@^3.3.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/babylonjs-inspector/-/babylonjs-inspector-3.3.0.tgz#074b8f5f42fb3f6933a55f8cfdf9cc95fbc7a3d5"
+babylonjs-inspector@4.0.0-alpha.10:
+  version "4.0.0-alpha.10"
+  resolved "https://registry.yarnpkg.com/babylonjs-inspector/-/babylonjs-inspector-4.0.0-alpha.10.tgz#ebd3e645a7ddc5220768a9615404a951e8032ff6"
   dependencies:
-    babylonjs "3.3.0"
-    babylonjs-gui "3.3.0"
-    babylonjs-loaders "3.3.0"
-    babylonjs-serializers "3.3.0"
+    babylonjs "4.0.0-alpha.10"
+    babylonjs-gui "4.0.0-alpha.10"
+    babylonjs-loaders "4.0.0-alpha.10"
+    babylonjs-serializers "4.0.0-alpha.10"
 
-babylonjs-loaders@3.3.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/babylonjs-loaders/-/babylonjs-loaders-3.3.0.tgz#7900badac3060eaec5aadb56f2fbbbb45e9b0e4c"
+babylonjs-loaders@4.0.0-alpha.10:
+  version "4.0.0-alpha.10"
+  resolved "https://registry.yarnpkg.com/babylonjs-loaders/-/babylonjs-loaders-4.0.0-alpha.10.tgz#37a6133b924e10513359d3972fe2794439b0018a"
   dependencies:
-    babylonjs-gltf2interface "3.3.0"
+    babylonjs "4.0.0-alpha.10"
+    babylonjs-gltf2interface "4.0.0-alpha.10"
 
-babylonjs-serializers@3.3.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/babylonjs-serializers/-/babylonjs-serializers-3.3.0.tgz#a0f82b0b8e3ee09fd9751b861ff4efefb34dcbb7"
+babylonjs-serializers@4.0.0-alpha.10:
+  version "4.0.0-alpha.10"
+  resolved "https://registry.yarnpkg.com/babylonjs-serializers/-/babylonjs-serializers-4.0.0-alpha.10.tgz#157df7588d4d0557df9f057a4a55c5319ddbe327"
   dependencies:
-    babylonjs "3.3.0"
-    babylonjs-gltf2interface "3.3.0"
+    babylonjs "4.0.0-alpha.10"
+    babylonjs-gltf2interface "4.0.0-alpha.10"
 
-babylonjs@3.3.0, babylonjs@^3.3.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/babylonjs/-/babylonjs-3.3.0.tgz#f7636c3761cc3260dac8adf26767bc6323e74181"
+babylonjs@4.0.0-alpha.10:
+  version "4.0.0-alpha.10"
+  resolved "https://registry.yarnpkg.com/babylonjs/-/babylonjs-4.0.0-alpha.10.tgz#451a51e82b68a88fee94040e7ed8942c88ca70b8"
 
 balanced-match@^1.0.0:
   version "1.0.0"
@@ -3496,8 +3497,8 @@ terser-webpack-plugin@^1.1.0:
     worker-farm "^1.5.2"
 
 terser@^3.8.1:
-  version "3.10.13"
-  resolved "https://registry.yarnpkg.com/terser/-/terser-3.10.13.tgz#00a8b2e9c1bec3f681257d90f96c3b1292ada97a"
+  version "3.11.0"
+  resolved "https://registry.yarnpkg.com/terser/-/terser-3.11.0.tgz#60782893e1f4d6788acc696351f40636d0e37af0"
   dependencies:
     commander "~2.17.1"
     source-map "~0.6.1"

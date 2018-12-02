@@ -5,8 +5,8 @@
   "author": "Andras Serfozo (https://twitter.com/SubZtep)",
   "license": "MIT",
   "dependencies": {
-    "babylonjs": "^3.3.0",
-    "babylonjs-inspector": "^3.3.0",
+    "babylonjs": "4.0.0-alpha.10",
+    "babylonjs-inspector": "4.0.0-alpha.10",
     "cannon": "^0.6.2",
     "dat.gui": "^0.7.3",
     "earcut": "^2.1.3",

@@ -13,10 +13,12 @@ function initEngine () {
     // Everything is fine, let's start Babylon
     canvas = document.querySelector("canvas")
     engine = new BABYLON.Engine(canvas, true)
+    engine.enableOfflineSupport = false
+
     scene = new BABYLON.Scene(engine)
 
     // Scene properties
-    scene.clearColor = new BABYLON.Color3(0.41, 0.51, 0.55)
+    scene.clearColor = new BABYLON.Color3(0.11, 0.21, 0.25)
 
     //scene.workerCollisions = true
 
@@ -32,7 +34,7 @@ function initEngine () {
     window.addEventListener("resize", () => engine.resize())
 
     // Tell to the game, it is time to start
-    canvas.dispatchEvent(new Event('loaded'))
+    canvas.dispatchEvent(new Event("engineLoaded"))
 
   } else {
 

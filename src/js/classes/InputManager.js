@@ -127,6 +127,8 @@ export class InputManager {
   _initGUI () {
     this._gui = new dat.GUI()
 
+    this._gui.closed = true
+
     this._gui.addFolder('Player state')
     for (let item of Object.keys(this._state)) {
       if (typeof this._state[item] === 'object') {
@@ -181,19 +183,16 @@ export class InputManager {
       let piv = this._player.getPivotPoint()
       piv.x = val
       this._player.setPivotPoint(piv)
-      this._helper.position = piv
     })
     this._gui.add(this._ftPlayerPivotPos, 'y').step(0.5).onChange(val => {
       let piv = this._player.getPivotPoint()
       piv.y = val
       this._player.setPivotPoint(piv)
-      this._helper.position = piv
     })
     this._gui.add(this._ftPlayerPivotPos, 'z').step(0.5).onChange(val => {
       let piv = this._player.getPivotPoint()
       piv.z = val
       this._player.setPivotPoint(piv)
-      this._helper.position = piv
     })
   }
 
@@ -213,8 +212,6 @@ export class InputManager {
     this._ftPlayerPivotPos.x = piv.x
     this._ftPlayerPivotPos.y = piv.y
     this._ftPlayerPivotPos.z = piv.z
-
-    this._helper.position = piv
 
     for (let c of this._gui.__controllers) {
       c.updateDisplay()

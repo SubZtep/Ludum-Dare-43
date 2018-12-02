@@ -41,8 +41,8 @@ export function throwSpheres () {
 
   for (let j = 0; j < 2; j += 0.8) {
     for (let i = 0; i < 10; i += 1.5) {
-      let posZ = j + 8 + player.position.z
-      getSphere(new BABYLON.Vector3(i - 4, 1, posZ))
+      let posZ = j + 8 + player.position.z + 15
+      getSphere(new BABYLON.Vector3(i - 4.1, 5, posZ))
     }
   }
 }
@@ -55,7 +55,15 @@ export function getSphere (pos) {
     sphere1 = _pool.get()
     sphere1.position = pos
   } else {
+    let spMat = new BABYLON.StandardMaterial("SpMat", scene)
+    spMat.bumpTexture = new BABYLON.Texture("assets/textures/stone-normal-map.png", scene)
+    spMat.diffuseTexture = new BABYLON.Texture("assets/textures/stone.png", scene)
+    spMat.specularColor = BABYLON.Color3.Black()
+    spMat.emissiveColor = BABYLON.Color3.Black()
+    spMat.ambientColor = BABYLON.Color3.Black()
+
     sphere1 = BABYLON.MeshBuilder.CreateSphere("sphere1", { diameter: 0.5 }, scene)
+    sphere1.material = spMat
     sphere1.position = pos
     sphere1.physicsImpostor = new BABYLON.PhysicsImpostor(
       sphere1,

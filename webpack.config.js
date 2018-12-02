@@ -4,6 +4,7 @@ const
   webpack = require('webpack')
 
 module.exports = function(env, argv) {
+  let isProd = argv.mode === 'production'
   let conf = {
     entry: {
       main: path.resolve(__dirname, 'src/js/main.js'),
@@ -38,14 +39,13 @@ module.exports = function(env, argv) {
         template: path.resolve(__dirname, 'src/pug/index.pug')
       }),
       new webpack.DefinePlugin({
-        PRODUCTION: argv.mode === 'production'
+        PRODUCTION: isProd
       })
     ],
 
     output: {
       path: path.resolve(__dirname, 'dist'),
-      filename: '[name].js'
-      //'[name]-[hash].js' (check for separated vendor hash)
+      filename: isProd ? '[name]-[hash].js' : '[name].js'
     },
 
     optimization: {

@@ -7,6 +7,7 @@ import { createPlayer, player } from "Objects/player"
 import CharacterController from "Classes/CharacterController"
 import { getSphere, initPool, throwSpheres } from "Classes/SphereSeeder"
 import { initDebug } from "Engine/debug"
+import { initAssetManager } from "Engine/assets"
 
 function startGame () {
   // Create basic objects
@@ -35,7 +36,12 @@ function startGame () {
   })
 }
 
-// Wait for the engine
-document
-  .querySelector("canvas")
-  .addEventListener("loaded", startGame, false)
+
+// Booting listeners
+let listinerOptions = {
+  capture: false,
+  once: true
+}
+let canvasEl = document.querySelector("canvas")
+canvasEl.addEventListener("engineLoaded", initAssetManager, listinerOptions)
+canvasEl.addEventListener("assetsLoaded", startGame, listinerOptions)

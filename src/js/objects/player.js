@@ -8,7 +8,7 @@ export function createPlayer () {
 
   let playerMaterial = new BABYLON.StandardMaterial('playermat', scene);
   playerMaterial.diffuseColor = new BABYLON.Color3(0.36, 0.37, 0.34)
-  playerMaterial.alpha = 0.8
+  //playerMaterial.alpha = 0.8
 
   player = BABYLON.MeshBuilder.CreateBox(
     "player",
@@ -16,7 +16,7 @@ export function createPlayer () {
       width: 1,
       height: 1,
       depth: 1,
-      updatable: true
+      //updatable: true
     },
     scene)
   player.material = playerMaterial

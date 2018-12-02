@@ -19,14 +19,6 @@ export default class extends InputManager {
     // Setting
     this._moveSpeed = 5 // Move animation speed
 
-    // Little helper
-    this._helper = BABYLON.MeshBuilder.CreateSphere("helper", { diameter: .5 }, scene)
-    this._helper.material = new BABYLON.StandardMaterial("helper", scene)
-    this._helper.material.diffuseColor = new BABYLON.Color3(0, 0.5, 0.5)
-    this._helper.parent = this._player
-    this._helper.position = this._player.getPivotPoint()
-    this._helper.isPickable = false
-
     this._initAnimations()
     this.initKeyboard()
 
@@ -82,7 +74,7 @@ export default class extends InputManager {
       } else {
         origin.z += testX
       }
-      origin.y -= 0.5 // check the ground exactly
+      origin.y -= 0.45 // check the ground
 
       let ray = new BABYLON.Ray(origin, pos, 1.5)
 
@@ -90,9 +82,10 @@ export default class extends InputManager {
       // debug
       //if (origin.z === 0) console.log('ray', [origin.toString(), pos.toString(), this._player.position.toString()])
 
-      //if (typeof this._rayHelper !== "undefined") this._rayHelper.dispose()
-      this._rayHelper = BABYLON.RayHelper.CreateAndShow(ray, scene, new BABYLON.Color3(1, 1, 0.1))
-      this._rayHelper._renderLine.isPickable = false
+      // Show raycast helper
+      let rayHelper = BABYLON.RayHelper.CreateAndShow(ray, scene, new BABYLON.Color3(1, 1, 0.1))
+      rayHelper._renderLine.isPickable = false
+      setTimeout(() => rayHelper.dispose(), 3000)
 
       let hit = scene.pickWithRay(ray)
       if (hit.hit) {

@@ -15,6 +15,26 @@ canvas {
   padding: 0;
 }
 
+// Loading screen
+#loading {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: radial-gradient(circle, #666 39%, #fff 40%);
+  z-index: 5000;
+  display: grid;
+  align-content: center;
+  text-align: center;
+  .msg {
+    color: #fff;
+  }
+  &.hide {
+    opacity: 0;
+    transition: opacity .3s;
+  }
+}
 
 /** GUI */
 .dg.ac {
