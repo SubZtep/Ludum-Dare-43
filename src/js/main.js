@@ -5,7 +5,7 @@ import { createLight, shadowGenerator } from "Scene/light"
 import { createEnvironment } from "Objects/environment"
 import { createPlayer, player } from "Objects/player"
 import CharacterController from "Classes/CharacterController"
-import { getSphere, initPool } from "Classes/SphereSeeder"
+import { getSphere, initPool, throwSpheres } from "Classes/SphereSeeder"
 
 function startGame () {
   // Create basic objects
@@ -19,21 +19,12 @@ function startGame () {
   initPool()
 
 
-  for (let j = 0; j < 5; j += 0.8) {
-    for (let i = 0; i < 5; i += 0.6) {
-      getSphere(new BABYLON.Vector3(i - 2.5, 1, j + 8))
-    }
-  }
+  throwSpheres()
 
-  /* let s = getSphere(new BABYLON.Vector3(0.5, 1, 8))
-  let s2 = getSphere(new BABYLON.Vector3(1.5, 1, 8)) */
 
   // Game loop
   engine.runRenderLoop(() => {
     scene.render()
-
-
-    // Add some code here...
   })
 }
 

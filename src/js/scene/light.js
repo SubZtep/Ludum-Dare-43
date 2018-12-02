@@ -19,6 +19,8 @@ export function createLight () {
   shadowGenerator.setTransparencyShadow(true)
 
   shadowGenerator.bias = 0.00001;
-    shadowGenerator.normalBias = 0.01
+  shadowGenerator.normalBias = 0.01
+
+  shadowGenerator.setDarkness(0.4)
 
 }
