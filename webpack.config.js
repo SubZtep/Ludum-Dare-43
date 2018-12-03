@@ -18,7 +18,8 @@ module.exports = function(env, argv) {
         Scene: path.resolve(__dirname, 'src/js/scene/'),
         Objects: path.resolve(__dirname, 'src/js/objects/'),
         Classes: path.resolve(__dirname, 'src/js/classes/'),
-        JS: path.resolve(__dirname, 'src/js/')
+        JS: path.resolve(__dirname, 'src/js/'),
+        Gameplay: path.resolve(__dirname, 'src/js/gameplay/')
       }
     },
 

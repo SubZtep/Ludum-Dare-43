@@ -27,6 +27,7 @@ const assetFiles = [
   "textures/stone.png",
   "textures/stone-normal-map.png",
   "textures/bg_scan_starlin_512x512.jpg",
+  //"textures/hand.jpg"
 ]
 
 export let assetsManager = null

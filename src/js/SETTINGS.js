@@ -5,6 +5,7 @@ export const data = {
   */
 
   showDebug: false,
+  showIntro: false,
 
   /*
   ** SKYBOX

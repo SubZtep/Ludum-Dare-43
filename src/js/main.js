@@ -10,6 +10,8 @@ import { initDebug } from "Engine/debug"
 import { initAssetManager } from "Engine/assets"
 import { data as ___S } from "./SETTINGS"
 import { playIntro, stopIntro } from "./intro"
+import { handAppear } from "Gameplay/Hand"
+
 
 function createButton(context, func) {
     var button = document.createElement("input");
@@ -54,7 +56,11 @@ function startUp () {
   }
 
   // Start intro
-  playIntro()
+  if (___S.showIntro) {
+    playIntro()
+  } else {
+    startGame()
+  }
 }
 
 
@@ -66,10 +72,13 @@ function startGame () {
   initPool()
   let cc = new CharacterController(player, scene)
 
-  setTimeout(() => {
+  /* setTimeout(() => {
     throwSpheres(),
     setInterval(() => throwSpheres(), 5000)
-  }, 2000)
+  }, 2000) */
+
+  handAppear()
+
 }
 
 
