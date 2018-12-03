@@ -22,17 +22,69 @@ canvas {
   right: 0;
   bottom: 0;
   left: 0;
-  background: radial-gradient(circle, #666 39%, #fff 40%);
+  background: radial-gradient(circle, #666 39%, #ccc 40%);
   z-index: 5000;
   display: grid;
   align-content: center;
   text-align: center;
   .msg {
-    color: #fff;
+    margin: 0 auto;
+    width: 20%;
+    line-height: 26px;
+    letter-spacing: 13px;
+    font-size: 24px;
+    word-wrap: break-word;
+    color: #fffa8c;
+    $borderWidth: 13px;
+    text-shadow:
+     -$borderWidth -$borderWidth 0 black,
+      $borderWidth -$borderWidth 0 black,
+      -$borderWidth $borderWidth 0 black,
+       $borderWidth $borderWidth 0 black;
+
   }
   &.hide {
     opacity: 0;
     transition: opacity .3s;
+  }
+}
+
+/** HUD */
+
+#hud {
+  z-index: 10000;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  input[type="button"] {
+    position: absolute;
+    bottom: 0;
+    margin: 6px 4px;
+    padding: 8px 14px;
+    background-color: rgba(0.6, 0.6, 0.6, 0.6);
+    font-size: 14px;
+    color: #eee;
+    border: 3px solid #666;
+    border-radius: 32px;
+    &:hover {
+      border-color: yellow;
+      color: yellow;
+      background-color: black;
+      cursor: pointer;
+    }
+  }
+
+  .devBuild {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    color: greenyellow;
+    font-size: 12px;
+    opacity: .75;
+    margin: 0 2px;
   }
 }
 

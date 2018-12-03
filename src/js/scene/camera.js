@@ -12,11 +12,11 @@ export function createCamera () {
   var postProcess0 = new BABYLON.BlurPostProcess("Horizontal blur", new BABYLON.Vector2(1.0, 0), kernel, 1.0, camera);
   var postProcess1 = new BABYLON.BlurPostProcess("Vertical blur", new BABYLON.Vector2(0, 1.0), kernel, 1.0, camera); */
 
-  /* var postProcess = new BABYLON.ImageProcessingPostProcess("processing", 1.0, camera);
+  var postProcess = new BABYLON.ImageProcessingPostProcess("processing", 1.0, camera);
   postProcess.vignetteWeight = 10;
   postProcess.vignetteStretch = 2;
   postProcess.vignetteColor = new BABYLON.Color4(0, 0.3, 0, 0);
-  postProcess.vignetteEnabled = true; */
+  postProcess.vignetteEnabled = true;
 
   /* var postProcess = new BABYLON.ImageProcessingPostProcess("processing", 1.0, camera);
   postProcess.exposure = 0.2 */

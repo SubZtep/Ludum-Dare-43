@@ -1,24 +1,55 @@
 import * as BABYLON from "babylonjs"
+import { data as ___S } from "JS/SETTINGS"
 
-let
-  canvas, // HTML canvas
-  engine, // Babylon engine
-  scene   // Current scene
+
+export let canvas   // HTML canvas
+export let engine   // Babylon engine
+export let scene    // Current scene
 
 function initEngine () {
 
-  // Test if the browser is support BabylionJS
   if (BABYLON.Engine.isSupported()) {
-
     // Everything is fine, let's start Babylon
+
     canvas = document.querySelector("canvas")
     engine = new BABYLON.Engine(canvas, true)
     engine.enableOfflineSupport = false
 
-    scene = new BABYLON.Scene(engine)
 
-    // Scene properties
+    /*
+    ** SCENE PROPERTIES
+    */
+    scene = new BABYLON.Scene(engine)
     scene.clearColor = new BABYLON.Color3(0.11, 0.21, 0.25)
+
+
+    /*
+    ** ADD SKYBOX
+    */
+
+    if ([ 'dds' ].includes(___S.SKYBOX.Pic.split('.').pop())) {
+      // .dds file
+      var hdrTexture = new BABYLON.CubeTexture(___S.SKYBOX.Pic, scene);
+      scene.createDefaultSkybox(hdrTexture, true, 10000);
+    } else {
+      // 6 faces cubemap
+      var skybox = BABYLON.MeshBuilder.CreateBox("skyBox", { size:1000.0 }, scene)
+      var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene)
+      skyboxMaterial.backFaceCulling = false
+      skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture(___S.SKYBOX.Pic, scene)
+      skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE
+      skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0)
+      skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0)
+      skybox.material = skyboxMaterial;
+
+      // Nights & Days
+      skybox.rotation = ___S.SKYBOX.RotationStart.clone()
+
+      setInterval(() =>
+          skybox.rotation = skybox.rotation.subtract(___S.SKYBOX.RotationStep),
+          ___S.SKYBOX.IntervalTimeout)
+    }
+
 
     //scene.workerCollisions = true
 
@@ -46,9 +77,3 @@ function initEngine () {
 
 // Wait until the page is loaded
 document.addEventListener("DOMContentLoaded", initEngine, false)
-
-export {
-  canvas,
-  engine,
-  scene
-}

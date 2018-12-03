@@ -17,7 +17,8 @@ module.exports = function(env, argv) {
         Engine: path.resolve(__dirname, 'src/js/engine/'),
         Scene: path.resolve(__dirname, 'src/js/scene/'),
         Objects: path.resolve(__dirname, 'src/js/objects/'),
-        Classes: path.resolve(__dirname, 'src/js/classes/')
+        Classes: path.resolve(__dirname, 'src/js/classes/'),
+        JS: path.resolve(__dirname, 'src/js/')
       }
     },
 

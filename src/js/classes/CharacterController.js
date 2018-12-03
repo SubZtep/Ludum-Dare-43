@@ -1,12 +1,10 @@
 import { scene } from "Engine/engine"
-import { Directions, InputManager } from './InputManager'
-import { camera } from "Scene/camera"
+import { Directions, InputManager } from "Classes/InputManager"
 
 const Animations = {
   Slide: 'slideAnim',
   Roll: 'rollAnim'
 }
-
 
 export default class extends InputManager {
 
@@ -22,7 +20,7 @@ export default class extends InputManager {
     this._initAnimations()
     this.initKeyboard()
 
-    this._initGUI()
+    //this._initGUI()
   }
 
   _initAnimations () {
@@ -85,7 +83,11 @@ export default class extends InputManager {
       // Show raycast helper
       let rayHelper = BABYLON.RayHelper.CreateAndShow(ray, scene, new BABYLON.Color3(1, 1, 0.1))
       rayHelper._renderLine.isPickable = false
-      setTimeout(() => rayHelper.dispose(), 3000)
+
+
+      const STRiP_DELAY = 35000
+
+      setTimeout(() => rayHelper.dispose(), STRiP_DELAY)
 
       let hit = scene.pickWithRay(ray)
       if (hit.hit) {
@@ -107,17 +109,6 @@ export default class extends InputManager {
     }
 
     let dir = this._state.lastDir
-    /* if (this._state.forward) {
-      dir = Directions.Up
-    } else if (this._state.backward) {
-      dir = Directions.Down
-    } else if (this._state.left) {
-      dir = Directions.Left
-    } else if (this._state.right) {
-      dir = Directions.Right
-    } */
-
-
     if (!this._canMove(dir)) return
 
     if (this._state.special) {
